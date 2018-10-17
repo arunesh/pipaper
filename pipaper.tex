@@ -356,7 +356,8 @@ is a building block for all of the protocol or blockchains' operations, such as 
 ledgers etc. All of the messages use the overlay network and thus, it becomes important to understand how such
 a network should be designed.
 
-This short writeup discusses ongoing work as part of the Picolo Project \cite{picolo}. The goal of the Picolo project is
+This short writeup discusses ongoing work as part of the Picolo Project \footnote{See https://picolo.network/paper for
+a detailed discussion of the Picolo network and database layer.}. The goal of the Picolo project is
 to build a fast decentralized open data network to support blockchain applications by offloading the storage and
 querying of structured data. As a part of this effort, we are evaluating the network layer designs used by existing
 projects in the blockchain space order to understand a few aspects, namely: (i) what are the typical overlay topologies
@@ -366,8 +367,8 @@ applications if we are to make that future a reality.
 
 The rest of this writeup is organized as follows. We present a brief summary of the related p2p overlay network layers
 in Section \ref{sec:rel}. Subsequently in Section \ref{sec:res} we present an overview of our research methodology into
-existing p2p overlay designs that support popular blockchains and applications today. Section \ref{sec:exp} discusses
-what our expected contributions would look like by the conference date. 
+existing p2p overlay designs that support popular blockchains and applications today. Finally, we conclude in Section
+\ref{sec:conc}.
 
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
@@ -439,33 +440,39 @@ layer that are relevant to decentralized applications in general.
 Some of the interesting and relevant aspects of a p2p overlay routing system would include:
 
 \begin{itemize}
-    \item {\em Location independent routing:}
-
-        Location independent routing refers to a class of techniques for locating objects based on content rather than
+    \item {\em Location independent routing:} Location independent routing refers to a class of techniques for locating objects based on content rather than
         their location, while attempting to find the shortest path possible to reach such objects. For example, in IPFS
         \cite{ipfs} a hash of the block is used to identify and refer to the content. The hash is also use to locate the
         content using the Kademlia routing protocol. Depending on the application, such as content lookup versus
         synchronizing across consensus shards, this is a
 
-    \item {\em Deterministic node mapping:}
-
-        It should be possible to route messages or lookup objects and services in the network regardless of where the
+    \item {\em Deterministic node mapping:} It should be possible to route messages or lookup objects and services in the network regardless of where the
         lookup originates. The result of the distributed routing algorithm should be deterministic.
 
-    \item {\em Overlay topology quality metrics:}
-        Overlay metrics such as routing stretch and stress help understand how inefficient a route is. For example, the
+    \item {\em Overlay topology quality metrics:} Overlay metrics such as routing stretch and stress help understand how inefficient a route is. For example, the
         stress metric helps understand the amount of duplication on a single network link as a result of inefficiencies
         in the overlay routing. Other metrics such as network diameter and graph topology metrics help understand how
         the network would behave in adverse scenarios, such as likelihood of a partition.
-    \item {\em Load balancing:}
-        It might be possible to leverage the network layer for implicit load balancing by using a set of nodes as
-        representatives for a given content addressable object.
-    \item {\em Dynamic membership:} How the routing layer adapts to churn.
-    \item {\em Tolerance to Byzantine behavior:} Whether the network can tolerate malicious and intentional disruption.
-        This is something that has not been studied in previous p2p network research.
+
+    \item {\em Load balancing:} It might be possible to leverage the network layer for implicit load balancing by using a set of nodes as
+        representatives for a given content addressable object. This might largely be a function of the service that the
+        network layer supports but might be critical to the overall application as well. For instance, a file system can
+        use a network layer that can easily balance load for a popular object.
+
+    \item {\em Dynamic membership:} How the routing layer adapts to churn. Nodes are expected to disappear without
+        notice in an open network environment. The service layer and the routing layer has to include redundancy in
+        order to gracefully cope with such failures. The probability of key nodes disappearing which can lead to network
+        partition should be minimized. In our study, we look at the possibility of network partitions as a way to
+        understand robustness in design.
+    \item {\em Tolerance to Byzantine behavior:} Can the network can tolerate malicious and intentional disruption.
+        While correlated failure modeling can provide some approximation to intentional disruptoin, this attack vector
+        is something that has not been studied in previous p2p network research. Most overlay protocols are not
+        evaluated from this perspective of denial of service attacks, in essence, understanding what type of attack
+        would need to be mounted to bring the network down (or cause a partition) and whether such an attack can be
+        detected (or mitigated).
 \end{itemize}
 
-\section{Expected Contributions}
+\section{Conclusion}
 \label{sec:exp}
 
 % An example of a floating figure using the graphicx package.
@@ -618,9 +625,9 @@ Some of the interesting and relevant aspects of a p2p overlay routing system wou
 % or if you just want to reserve a space for a photo:
 
 % if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{Arunesh Mishra}
+\begin{IEEEbiographynophoto}{Arunesh Mishra:}
 
-Dr. Arunesh Mishra is an Entrepreneur and a Researcher in the area of Distributed Systems, Networking and
+Dr. Mishra is an Entrepreneur and a Researcher in the area of Distributed Systems, Networking and
     Security.  He has a PhD in the area of Wireless networking and Security which includes 30+ papers in top ACM and
     IEEE Conferences including a best paper award at ACM Mobicom. He has written proposals for NSF grants which have
     been awarded and also holds 22+ patents (20 pending). He built Google’s location
@@ -632,7 +639,11 @@ Dr. Arunesh Mishra is an Entrepreneur and a Researcher in the area of Distribute
 % biographies
 %\newpage
 
-\begin{IEEEbiographynophoto}{Adi Kancherla}
+\begin{IEEEbiographynophoto}{Adi Kancherla:}
+    Mr. Kancherla is an ex-Google engineer with a graduate degree from University of Wisconsin, Madison. He has
+    experience in building scalable database backends to support high availability, resilience in the presence of
+    failures and real-time performance. He is interested in moving the world to a Web 3.0 model where all apps are
+    decentralized by design.
 \end{IEEEbiographynophoto}
 
 % You can push biographies down or up by placing
