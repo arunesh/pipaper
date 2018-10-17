@@ -289,8 +289,8 @@
 % was not built to handle multiple paragraphs
 %
 
-\author{Arunesh~Mishra~and Adi~Kancherla,~\IEEEmembership{Picolo Labs}% <-this % stops a space
-\thanks{Both authors are currently working at Picolo Labs Inc.}}% <-this % stops a space
+\author{Arunesh~Mishra~and Adi~Kancherla\\~\IEEEmembership{Picolo Labs}% <-this % stops a space
+\thanks{Arunesh Mishra: https://arunesh.github.io/}}% <-this % stops a space
 
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
@@ -311,10 +311,9 @@
 % space somehow managed to creep in.
 
 
-
 % The paper headers
-\markboth{Extended Abstract submission to Stanford CBR Conference, 2019.}%
-{Mishra \MakeLowercase{\textit{et al.}}: How to design a fast Peer-peer overlay network}
+\markboth{Extended Abstract submission to Stanford Blockchain Conference, 2019.}%
+{Mishra \MakeLowercase{\textit{et al.}}: On Designing Performant Peer-peer Overlay Networks}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -342,9 +341,11 @@
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
+\IEEEPARstart{W}{e} are in the midst of building a new Internet. Blockchain networks like Ethereum have popularized the idea of
+fully decentralized, owner less applications that are run on an open network of untrusted but incentivized nodes without the
+oversight of a central authority.
 
-Blockchain and distributed ledger technologies define protocols that allow large, ad-hoc, groups of users to transfer
-value between each other. They have further evolved into a computing and decentralized app (dapp) platform \cite{eth_wc}. This
+They have further evolved into a computing and decentralized app (dapp) platform \cite{eth_wc}. This
 radical computing paradigm has the potential to become the new Internet with both data and compute being fully decentralized.
 
 Decentralization has a lot of benefits \cite{} which requires an open participation model, that is, anybody in general
@@ -370,27 +371,94 @@ a network should be designed.
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{T}{his} demo file is intended to serve as a ``starter file''
-for IEEE journal papers produced under \LaTeX\ using
-IEEEtran.cls version 1.8b and later.
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
-I wish you the best of success.
 
-
-\hfill mds
+%\hfill mds
  
-\hfill August 26, 2015
+%\hfill August 26, 2015
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+This is an short summary of the resear
+
+\section{Related Work}
+There has been extensive research on p2p overlay networks over the last 15 years.  Napster \cite{Napster} was one of the first popular services that provided much of the original inspiration for p2p
+systems although its database was centralized.  DNS is an example of a widely deployed distributed and largely
+decentralized key-value database that powers every lookup and interaction on the Internet \cite{Mockapetris_1988}. DNS
+relies on special root servers to bootstrap the lookup protocol. The Freenet \cite{freenet_thesis, Clarke_2001} and the
+Gnutella \cite{Gnutella} p2p systems were popular in the previous decade for file sharing. Both systems were designed
+for sharing of large files over a longer duration of time. Content reliabilty including lookup reliability and network
+latency goals were necessary in this enviroment. 
+
+The second generation of p2p systems include research driven projects such as Chord \cite{Stoica_2001}, Content
+Addressable Network (CAN)
+\cite{Ratnasamy_2001}, Pastry \cite{Rowstron_2001}, Tapestry \cite{tapestry2004} and
+Kademlia. 
+
+Other notable systems include Viceroy \cite{viceroy} which provides logarithmic hops through nodes with constant degree
+routing tables. SkipNet \cite{skipnet} uses a multidimensional skip-list data structure to support overlay routing,
+maintaining both a DNS-based namesapce for operational locality and a randomized namespace for network locality. Other
+overlay proposals such as Koorde \cite{koorde} and Naor et al \cite{simple_hash} attain lower bounds on local routing
+state but oversimplify some of the other features. 
+\newline\newline
+The third generation of p2p research includes building applications on top of these DHT systems, validating them as
+novel infrastructures or tuning them for specific use cases. For example, applications such as PAST \cite{past} and
+SCRIBE \cite{scribe} are built on top of Pastry. Decentralized file storage application project OceanStore \cite{oceanstore} was built
+on top of Tapestry, while CFS \cite{cfs} was build on top of Chord. FarSite \cite{farsite} uses a conventional
+distributed directory service and could be built on top of Pastry. Another example of an overlay network is the Overcast
+System \cite{overcast}, which provides reliable single-source multicast streams.
+
+\section{Research Methodology}
+
+The goal of our study is to understand the architecture of some of the popular blockchain networks, such as Ethereum
+(Whisper protocol), IPFS, Bitcoin alongwith some of the emerging projects in this space. Our approach includes
+documenting their overlay network properties according to the features listed the following subsection. Further we have
+built a "network crawler" utility, similar to traceroute, that can crawl the layer 4 topology of these networks to
+further understand them through certain metrics (discussed below).
+
+Overall, we find that most blockchain networks and decentralized projects pay very little attention to the design
+details for the p2p overlay layer. This is expected as the majority of the focus has been on speed, fast consensus and
+smart contract execution to name a few challenges. However, a well designed network layer has demonstrated improvements
+at the application layer metrics in past work \cite{tapestry2004, farsite, oceanstore, past}. We will present results
+from these various networks alongside insights on any bottlenecks and possible improvements both including short-term
+fixes and long-term architectural improvements. In the next subsection, we discuss some of the aspects of the routing
+layer that are relevant to decentralized applications in general.
+
+\subsection{P2p Overlay Design principles}
+Some of the interesting and relevant aspects of a p2p overlay routing system would include:
+
+\begin{itemize}
+    \item {\em Location independent routing:}
+
+        Location independent routing refers to a class of techniques for locating objects based on content rather than
+        their location, while attempting to find the shortest path possible to reach such objects. For example, in IPFS
+        \cite{ipfs} a hash of the block is used to identify and refer to the content. The hash is also use to locate the
+        content using the Kademlia routing protocol. Depending on the application, such as content lookup versus
+        synchronizing across consensus shards, this is a
+
+    \item {\em Deterministic node mapping:}
+
+        It should be possible to route messages or lookup objects and services in the network regardless of where the
+        lookup originates. The result of the distributed routing algorithm should be deterministic.
+
+    \item {\em Overlay topology quality metrics:}
+        Overlay metrics such as routing stretch and stress help understand how inefficient a route is. For example, the
+        stress metric helps understand the amount of duplication on a single network link as a result of inefficiencies
+        in the overlay routing. Other metrics such as network diameter and graph topology metrics help understand how
+        the network would behave in adverse scenarios, such as likelihood of a partition.
+    \item {\em Load balancing:}
+        It might be possible to leverage the network layer for implicit load balancing by using a set of nodes as
+        representatives for a given content addressable object.
+    \item {\em Dynamic membership:} How the routing layer adapts to churn.
+    \item {\em Tolerance to Byzantine behavior:} Whether the network can tolerate malicious and intentional disruption.
+        This is something that has not been studied in previous p2p network research.
+\end{itemize}
 
 \cite{FHE}
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+
+\section{Summary of Contributions}
 
 
 % An example of a floating figure using the graphicx package.
@@ -552,23 +620,16 @@ The authors would like to thank...
 % http://mirror.ctan.org/biblio/bibtex/contrib/doc/
 % The IEEEtran BibTeX style support page is at:
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
+\bibliographystyle{IEEEtran}
+% \bibliographystyle{unsrt}
 % argument is your BibTeX string definitions and bibliography database(s)
 %\bibliography{IEEEabrv,../bib/paper}
 %
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
-
-% biography section
-% 
+\bibliography{pipaper.bib}
 % If you have an EPS/PDF photo (graphicx package needed) extra braces are
 % needed around the contents of the optional argument to biography to prevent
 % the LaTeX parser from getting confused when it sees the complicated
@@ -578,21 +639,22 @@ H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
 %\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
 % or if you just want to reserve a space for a photo:
 
-\begin{IEEEbiography}{Michael Shell}
-Biography text here.
-\end{IEEEbiography}
-
 % if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{John Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
+\begin{IEEEbiographynophoto}{Arunesh Mishra}
+
+Dr. Arunesh Mishra is an Entrepreneur and a Researcher in the area of Distributed Systems, Networking and
+    Security.  He has a PhD in the area of Wireless networking and Security which includes 30+ papers in top ACM and
+    IEEE Conferences including a best paper award at ACM Mobicom. He has written proposals for NSF grants which have
+    been awarded and also holds 22+ patents (20 pending). He built Google’s location
+    computation algorithms that serve 3 Billion users every day by self-learning from crowd-sourced data. He created the
+    tech stack for 4 product teams during his 10 year tenure at
+    Google including a demo at Google I/O.  \end{IEEEbiographynophoto}
 
 % insert where needed to balance the two columns on the last page with
 % biographies
 %\newpage
 
-\begin{IEEEbiographynophoto}{Jane Doe}
-Biography text here.
+\begin{IEEEbiographynophoto}{Adi Kancherla}
 \end{IEEEbiographynophoto}
 
 % You can push biographies down or up by placing
