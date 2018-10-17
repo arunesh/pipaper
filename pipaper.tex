@@ -330,7 +330,7 @@
 \begin{abstract}
 
 Many experts believe that decentralized applications will be the core paradigm for Web 3.0. To become real, these applications need to run on a
-    fast network. Since most networks provide an open participation model, the system does'nt have control over how the
+    fast network. Since most networks provide an open participation model, the system doesn't have control over how the
     network topology grows. In this work, we conduct an empirical analysis of the network layer that supports decentralized applications and blockchains. 
     We present a set of design principles that p2p overlay networks should adhere to in general. The talk will also
     discuss empirical results from data collected on IPFS, Ethereum and a couple of other blockchain projects to compare
@@ -358,19 +358,20 @@ data privacy and the paradox of {\it user-trust} in an attention economy \cite{t
 time to advertisers.
 
 In order to realize these benefits, decentralization requires an open participation model, that is, anybody in general
-should be allowed to participate on the network. This brings forth new exciting technical challenges for the Academic
-and research community to tackle. One such challenge to consider is the need for a fast network that connects the
-participating nodes, miners or users and their devices. The p2p overlay network \cite{p2p_survey}
-is a building block for all of the protocol or blockchains' operations, such as consensus, sharding, replication,
-ledgers etc. All of the messages use the overlay network and thus, it becomes important to understand how such
+should be allowed to participate on the network. This brings forth new and exciting technical challenges for the Academic
+and Research community to tackle. One such challenge is the need for a fast network that connects the
+participating nodes, miners or users and their devices. This p2p overlay network \cite{p2p_survey}
+is a building block for blockchain protocols or core blockchain operations, such as consensus, sharding, replication,
+ledgers etc. All of the communication messages use the overlay network and thus, it becomes important to understand how such
 a network should be designed.
 
 This short writeup discusses ongoing work as part of the Picolo Project \footnote{See https://picolo.network/paper for
 a detailed discussion of the Picolo network and database layer.}. The goal of the Picolo project is
 to build a fast decentralized open data network to support blockchain applications by offloading the storage and
-querying of structured data. As a part of this effort, we are evaluating the network layer designs used by existing
+querying of structured data to a separate fast network. As a part of this effort, we are evaluating the network layer designs used by existing
 projects in the blockchain space order to understand a few aspects, namely: (i) what are the typical overlay topologies
-for blockchain projects and (ii) what are the routing, lookup and message transfer latencies, costs and inefficiences if
+(and their properties)
+for blockchain networks and (ii) what are the routing, lookup, message transfer latencies, costs and inefficiences if
 any. This work will help us design a better p2p overlay which is critical to support production quality decentralized
 applications if we are to make that future a reality.
 
@@ -428,6 +429,11 @@ SCRIBE \cite{scribe} are built on top of Pastry. Decentralized file storage appl
 on top of Tapestry, while CFS \cite{cfs} was build on top of Chord. FarSite \cite{farsite} uses a conventional
 distributed directory service and could be built on top of Pastry. Another example of an overlay network is the Overcast
 System \cite{overcast}, which provides reliable single-source multicast streams.
+
+Given the wide diversity of research in the p2p overlay community, it is a bit surprising that the blockchain community
+has largely only used one or two variants of the choices available. IPFS uses Kademlia \cite{kademlia} which is
+implemented as a part of {\it libp2p} project. Many other network layers have made this choice, while some resort to a
+more simplistic gossip-protocol style designs.
 
 \section{Research Methodology}
 \label{sec:res}
