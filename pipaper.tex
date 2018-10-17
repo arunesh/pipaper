@@ -438,7 +438,7 @@ more simplistic gossip-protocol style designs.
 \section{Research Methodology}
 \label{sec:res}
 The goal of our study is to understand the architecture of some of the popular blockchain networks, such as Ethereum
-(Whisper protocol), IPFS, Bitcoin alongwith some of the emerging projects in this space. Our approach includes
+(Whisper protocol), IPFS, Neo, EOS alongwith some of the emerging projects in this space. Our approach includes
 documenting their overlay network properties according to the features listed the following subsection. Further we have
 built a "network crawler" utility, similar to traceroute, that can crawl the layer 4 topology of these networks to
 further understand them through certain metrics (discussed below).
@@ -458,8 +458,8 @@ Some of the interesting and relevant aspects of a p2p overlay routing system wou
     \item {\em Location independent routing:} Location independent routing refers to a class of techniques for locating objects based on content rather than
         their location, while attempting to find the shortest path possible to reach such objects. For example, in IPFS
         \cite{ipfs} a hash of the block is used to identify and refer to the content. The hash is also use to locate the
-        content using the Kademlia routing protocol. Depending on the application, such as content lookup versus
-        synchronizing across consensus shards, this is a
+        content using the Kademlia routing protocol. This might be a desirable property depending on the application (content lookup vs
+        consensus across shards).
 
     \item {\em Deterministic node mapping:} It should be possible to route messages or lookup objects and services in the network regardless of where the
         lookup originates. The result of the distributed routing algorithm should be deterministic.
