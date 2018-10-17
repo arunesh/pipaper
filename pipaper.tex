@@ -472,8 +472,28 @@ Some of the interesting and relevant aspects of a p2p overlay routing system wou
         detected (or mitigated).
 \end{itemize}
 
+\subsection{Data collection}
+
+Similar to how traceroute works on the Internet by sending pings with sequentially increasing TTL values, one can create
+a similar "route crawling" algorithm that can compute p2p overlay topologies for blockchain networks. For example, with
+a prefix-based routing scheme like Kademlia, a crawler can send route requests to a set of carefully determined content
+or host IDs which can help it maintain an updated view of the network. This data can be combined in real-time with
+mulitple such observers in the network. Note that the physical location (layer 3) of these crawlers has no significance
+on the measurment outcome, essentially a single machine can run a few hundred of these crawlers that can be unformly
+distributed in the routing space.
+
+We will present results from crawling the top blockchain networks. For some of the upcoming chains, we will also
+present results from their respective testnets which we have been provided access to for research purposes. 
+
 \section{Conclusion}
 \label{sec:exp}
+
+The overall goal of our research is to cultivate an understanding in the blockchain community for the importance of p2p
+overlay network design. We do this in two steps: (i) The first step is to present an empirical study of existing
+networks, their performance and understanding of their limitations and bottlenecks if any, (ii) bring forth lessons from
+extensive research done in the past decade to the blockchain network design in light of the empirical study. 
+This will help researchers and blockchain engineers design a better network backbone to support fully decentralized
+applications.
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
